@@ -131,7 +131,6 @@ pydantic_core==2.20.1
 PyGetWindow==0.0.9
 Pygments==2.18.0
 PyMsgBox==1.0.9
-pyobjc-framework-Accessibility==10.2
 pyobjc-framework-Accounts==10.2
 pyobjc-framework-AddressBook==10.2
 pyobjc-framework-AdServices==10.2
