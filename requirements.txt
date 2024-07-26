@@ -8,3 +8,4 @@ langchain-community
 langchain-core
 gunicorn
 pydantic
+beautifulsoup4
