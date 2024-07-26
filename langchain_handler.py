@@ -24,13 +24,53 @@ def initialize_langchain():
     os.environ["OPENAI_API_KEY"] = api_key
     chat = ChatOpenAI(model="gpt-3.5-turbo-1106", temperature=0.2)
 
-    loader = WebBaseLoader(
-        "https://support.artisan.co/en/collections/6492032-artisan-sales")
-    data = loader.load()
+    # List of websites to scrape
+    urls = [
+        "https://www.artisan.co/",
+        "https://www.artisan.co/pricing",
+        "https://www.artisan.co/solutions/enterprise",
+        "https://www.artisan.co/ai-sales-agent",
+        "https://www.artisan.co/talk-to-sales?page_source=/",
+        "https://www.artisan.co/sales-ai",
+        "https://www.artisan.co/products/b2b-data",
+        "https://www.artisan.co/products/sales-playbooks",
+        "https://www.artisan.co/products/email-warmup",
+        "https://www.artisan.co/products/sales-automation",
+        "https://www.artisan.co/blog",
+        "https://www.artisan.co/watch-demo",
+        "https://www.artisan.co/casestudies",
+        "https://www.artisan.co/solutions/midmarket",
+        "https://www.artisan.co/about",
+        "https://www.artisan.co/contact-us",
+        "https://www.artisan.co/careers",
+        "https://www.artisan.co/terms-of-use",
+        "https://www.artisan.co/privacy-policy",
+        "https://www.artisan.co/solutions/enterprise",
+        "https://www.artisan.co/blog/how-to-find-b2b-leads",
+        "https://www.artisan.co/blog/ai-sdr",
+        "https://www.artisan.co/blog/b2b-sales-channels",
+        "https://www.artisan.co/blog/lead-generation-outsourcing",
+        "https://www.artisan.co/blog/apollo-alternatives",
+        "https://www.artisan.co/blog/outbound-sales-software",
+        "https://www.artisan.co/blog/ai-for-sales-prospecting",
+        "https://www.artisan.co/blog/the-cold-emailing-masterclass-the-complete-guide-to-skyrocketing-leads-sales",
+        "https://www.artisan.co/blog/artisan-raises-7-3-seed-round",
+        "https://www.artisan.co/blog/outbound-sales-automation",
+        "https://www.artisan.co/blog/ai-language-models-2024",
+        "https://www.artisan.co/solutions/startups",
+        "https://www.artisan.co/features/email-deliverability",
+        "https://www.artisan.co/features/security"
+    ]
+
+    all_data = []
+    for url in urls:
+        loader = WebBaseLoader(url)
+        data = loader.load()
+        all_data.extend(data)
 
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=500, chunk_overlap=0)
-    all_splits = text_splitter.split_documents(data)
+    all_splits = text_splitter.split_documents(all_data)
 
     vectorstore = Chroma.from_documents(
         documents=all_splits, embedding=OpenAIEmbeddings())
